@@ -1,5 +1,6 @@
 #include "heap.h"
 
+
 int square(int a, int power) {
 	int ret = 1;
 	while (power) {
@@ -30,11 +31,11 @@ int heap::operator+(int val) {
 	numberOfNodes++;
 	int k = numberOfNodes;
 	node *auxptr;	//creating new pointer pointing at a node
-	return NULL;
 	auxptr = new node[k];	//creating a new array of nodes
 	if (k != 1) {
 		memcpy(auxptr, nodeArray, sizeof(nodeArray));	//if that's not the first node we make,
 		delete[] nodeArray;	//cpy the memory of the old array to the new, relasing the old one
+		
 	}
 	nodeArray = auxptr;
 	nodeArray[k].value = val;
@@ -45,11 +46,23 @@ int heap::operator+(int val) {
 	}
 	else {
 		nodeArray[k].parent = &nodeArray[parentNmbr(k)];
+		nodeArray[k].leftChild = 0;
+		nodeArray[k].rightChild = 0;
+		if (nodeArray[k].parent->leftChild) {
+			nodeArray[k].parent->leftChild = &nodeArray[k];
+		}
+		else {
+			nodeArray[k].parent->rightChild = &nodeArray[k];
+		}
 	}
 	//beginning checks
-	
-	while (nodeArray[parentNmbr(k)].value > nodeArray[k].value) {
-
+	if (nodeArray[k].parent != 0) {
+		while (nodeArray[parentNmbr(k)].value > nodeArray[k].value) {	//changes the value between the new object and the parent, 
+			int aux;													//as long as the parent doesn't fit criteria
+			aux = nodeArray[parentNmbr(k)].value;
+			nodeArray[parentNmbr(k)].value = nodeArray[k].value;
+			nodeArray[k].value = aux;
+		}
 	}
 
 	
