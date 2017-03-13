@@ -9,5 +9,11 @@ using namespace std;
 
 
 int main() {
-
+	heap test;
+	test + 2;
+	test + 5;
+	test + 7;
+	test + 1;
+	getchar();
+	return 0;
 }
