@@ -1,8 +1,8 @@
 #pragma once
-class node
+class Node
 {
 public:
-	node *parent, *leftChild, *rightChild;
+	Node *parent, *leftChild, *rightChild;
 	int value;
 };
 

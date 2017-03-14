@@ -15,20 +15,22 @@ inline int leftChildNmbr(int);
 inline int rightChildNmbr(int);
 
 
-class heap
+class Heap
 {
 public:
-	heap();
-	~heap();
+	Heap();
+	~Heap();
 	int operator+(int);
 	int operator-(int);
+	int operator-(Node*);
 
-	node *searchHeap(int);
-	int swapChild(node*);
+	Node *SearchHeap(int);
+	int SwapCond(Node*);
 
 	unsigned int numberOfNodes = 0;
-	node *nodeArray;
+	Node *nodeArray;
 
+	void Draw();
 
 
 };
