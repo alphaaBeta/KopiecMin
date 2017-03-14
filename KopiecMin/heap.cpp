@@ -19,7 +19,7 @@ inline int rightChildNmbr(int a) { return (a * 2) + 2; }
 
 
 Heap::Heap() {
-	nodeArray = new Node[1]; //start of the array is pointing at NULL
+	nodeArray = static_cast<Node*>(malloc(sizeof(Node))); //start of the array is pointing at NULL
 
 }
 
@@ -43,7 +43,7 @@ int Heap::operator+(int val) {
 		
 	}
 	else {
-		nodeArray = static_cast<Node*> (realloc(nodeArray, sizeof(Node)*(k+1) ) ); //casting the returned void to node ptr
+		nodeArray = reinterpret_cast<Node*> (realloc(nodeArray, sizeof(Node)*(k+1) ) ); //casting the returned void to node ptr
 		nodeArray[k].value = val;
 		nodeArray[k].parent = &nodeArray[parentNmbr(k)];
 
@@ -104,7 +104,8 @@ Node *Heap::SearchHeap(int val) {
 	int n = numberOfNodes;
 	int i = 0;
 	while (i < n) {
-		if (nodeArray[i].value == val) { return &nodeArray[i]; }
+		if (nodeArray[i].value == val) { 
+			return &(nodeArray[i]); }
 		i++;
 	}
 	return 0;
@@ -169,7 +170,9 @@ void Heap::Draw(){
 	int i = 0;
 	while (i < n) {
 		cout << nodeArray[i].value<< " ";
-
+		if (nodeArray[0].value == 2) {
+			//cout << "KURWA";
+		}
 		i++;
 	}
 	cout <<endl << numberOfNodes<< endl;

@@ -11,12 +11,23 @@ using namespace std;
 int main() {
 	Heap test;
 	test + 2;
+	test.Draw();
 	test + 5;
+	test.Draw();
+	test + 5;
+	test.Draw();
 	test + 7;
+	test.Draw();
 	test + 1;
 	test.Draw();
-	test - 1;
+	test + 1;
 	test.Draw();
+	test + 1;
+	test.Draw();
+	/*test - 1;
+	test.Draw();
+	test - 5;
+	test.Draw();*/
 	test - 5;
 	test.Draw();
 	//int *i = new int[1000];
