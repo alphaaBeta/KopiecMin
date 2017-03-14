@@ -21,7 +21,10 @@ public:
 	heap();
 	~heap();
 	int operator+(int);
+	int operator-(int);
 
+	node *searchHeap(int);
+	int swapChild(node*);
 
 	unsigned int numberOfNodes = 0;
 	node *nodeArray;

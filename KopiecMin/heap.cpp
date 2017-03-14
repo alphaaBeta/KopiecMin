@@ -43,13 +43,36 @@ int heap::operator+(int val) {
 
 	}
 	//nodeArray = auxptr;
-	nodeArray[k].value = val;
+	if (k != 1) {
+		int i;
+		node *aux;
+		do {	//looks for the nearest empty node
+			if (nodeArray[i].leftChild == 0) {
+				aux = nodeArray[i].leftChild;
+				aux->value = val;
+				aux->parent = &nodeArray[i];
+				aux->leftChild = 0;
+				aux->rightChild = 0;
+				k = leftChildNmbr(i);
+			}
+			if (nodeArray[i].rightChild == 0) {
+				aux = nodeArray[i].rightChild;
+				aux->value = val;
+				aux->parent = &nodeArray[i];
+				aux->leftChild = 0;
+				aux->rightChild = 0;
+				k = rightChildNmbr(i);
+			}
+			i++;
+		} while (nodeArray[i].leftChild == 0 || nodeArray[i].rightChild == 0);
+	}
+
 	if (k == 1) { //for first node
 		nodeArray[k].parent = 0;
 		nodeArray[k].leftChild = 0;
 		nodeArray[k].rightChild = 0;
 	}
-	else {
+	/*else {
 		nodeArray[k].parent = &nodeArray[parentNmbr(k)];
 		nodeArray[k].leftChild = 0;
 		nodeArray[k].rightChild = 0;
@@ -59,19 +82,61 @@ int heap::operator+(int val) {
 		else {
 			nodeArray[k].parent->rightChild = &nodeArray[k];
 		}
-	}
+	}*/
 	//beginning checks
 	if (nodeArray[k].parent != 0) {
-		while ((nodeArray[parentNmbr(k)].value > nodeArray[k].value)&&(k != 1)) {	//changes the value between the new object and the parent, 
-			int aux;													//as long as the parent doesn't fit criteria
-			aux = nodeArray[parentNmbr(k)].value;
-			nodeArray[parentNmbr(k)].value = nodeArray[k].value;
-			nodeArray[k].value = aux;
-			k = parentNmbr(k);
-		}
+		
 	}
 	
 	return 1;
 
 	
+}
+
+int heap::operator-(int val) {
+	node *aux;
+	while (aux) {
+		aux = searchHeap(val);
+		if (!aux) { return 0; }
+		node *lc = aux->leftChild;
+		node *rc = aux->rightChild;
+		if (rc || lc) {
+			if (lc && !rc) { //when there is no rightchild
+				aux->value = lc->value;
+				lc = 0;
+				numberOfNodes--;
+			}
+			else {
+				if (lc->value < rc->value) { //when leftchild value is bigger than rightchild
+					aux->value = lc->value;
+					lc->value = rc->value;
+					rc = 0;
+					numberOfNodes--;
+				}
+			}
+		}
+	}
+}
+
+node *heap::searchHeap(int val) {
+	//node *aux;
+	//aux = nodeArray + 1;
+	int n = sizeof(nodeArray) / sizeof(node);
+	int i = 1;
+	while (i <= n) {
+		if (nodeArray[i].value == val) { return nodeArray + i; }
+		i++;
+	}
+	return 0;
+}
+
+
+int heap::swapChild(node *a) {
+	while ((nodeArray[parentNmbr(k)].value > nodeArray[k].value) && (k != 1)) {	//changes the value between the new object and the parent, 
+		int aux;													//as long as the parent doesn't fit criteria
+		aux = nodeArray[parentNmbr(k)].value;
+		nodeArray[parentNmbr(k)].value = nodeArray[k].value;
+		nodeArray[k].value = aux;
+		k = parentNmbr(k);
+	}
 }
