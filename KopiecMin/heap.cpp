@@ -19,13 +19,11 @@ inline int rightChildNmbr(int a) { return (a * 2) + 2; }
 
 
 Heap::Heap() {
-	//nodeArray = static_cast<Node*>(malloc(sizeof(Node))); //start of the array is pointing at NULL
-	nodeArray.resize(1);
+	//nodeArray.resize(0);
 
 }
 
 Heap::~Heap() {
-	//delete[] nodeArray;
 
 }
 
@@ -45,7 +43,6 @@ int Heap::operator+(int val) {
 		nodeArray.push_back(aux);
 
 		numberOfNodes++;
-		delete aux;
 		return 1;
 		
 	}
@@ -64,13 +61,12 @@ int Heap::operator+(int val) {
 		aux->leftChild = 0;
 		aux->rightChild = 0;
 		nodeArray.push_back(aux);
-		SwapCond(&nodeArray[k]);
+		SwapCond(nodeArray[k]);
 
 	}
 	
 	
 	numberOfNodes++;
-	
 	return 1;
 
 	
@@ -89,27 +85,27 @@ int Heap::operator-(int val) {
 
 int Heap::operator-(Node *a) {
 	Node *aux;
-	aux = &nodeArray[numberOfNodes - 1];
-	if (aux->parent->leftChild == aux) {	//checking which child of the parent aux is
+	//aux = &nodeArray[numberOfNodes - 1];
+	aux = nodeArray[numberOfNodes - 1];
+	if (aux->parent && aux->parent->leftChild == aux) {	//removing connections
 		aux->parent->leftChild = 0;
 	}
 	else {
 		aux->parent->rightChild = 0;
 	}
 	a->value = aux->value;
-	aux->parent = 0;
+	nodeArray.pop_back();
 	numberOfNodes--;
 	SwapCond(a);
 	return 1;
 }
 
 Node *Heap::SearchHeap(int val) {
-	int n = numberOfNodes;
-	int i = 0;
-	while (i < n) {
-		if (nodeArray[i].value == val) { 
-			return &(nodeArray[i]); }
-		i++;
+	int n = nodeArray.size();
+	for (int i = 0; i < n; i++) {
+		if (nodeArray[i]->value == val) {
+			return nodeArray[i];
+		}
 	}
 	return 0;
 }
@@ -133,16 +129,17 @@ int Heap::SwapCond(Node *a) { //puts selected node in the correct place of the h
 				a->rightChild->value = a->value;
 				a->value = aux;
 				a = a->rightChild;
-				return 1;
+				continue;
 			}
 			else {
 				int aux = a->leftChild->value;
 				a->leftChild->value = a->value;
 				a->value = aux;
 				a = a->leftChild;
-				return 1;
+				continue;
 			}
 		}
+		
 		int aux = a->leftChild->value;
 		a->leftChild->value = a->value;
 		a->value = aux;
@@ -154,12 +151,10 @@ int Heap::SwapCond(Node *a) { //puts selected node in the correct place of the h
 }
 
 void Heap::Draw(){
-	int n = numberOfNodes;
+	int n = nodeArray.size();
 	int i = 0;
 	while (i < n) {
-		cout << nodeArray[i].value<< " ";
-		if (nodeArray[0].value == 2) {
-		}
+		cout << nodeArray.at(i)->value<< " ";
 		i++;
 	}
 	cout <<endl << numberOfNodes<< endl;

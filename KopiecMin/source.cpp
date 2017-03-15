@@ -30,6 +30,8 @@ int main() {
 	test.Draw();*/
 	test - 5;
 	test.Draw();
+	test - 1;
+	test.Draw();
 	//int *i = new int[1000];
 	getchar();
 	return 0;

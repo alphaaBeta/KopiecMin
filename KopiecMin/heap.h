@@ -25,7 +25,7 @@ public:
 	int operator-(int);
 	int operator-(Node*);
 
-	int SearchHeap(int);
+	Node * SearchHeap(int);
 	int SwapCond(Node*);
 
 	unsigned int numberOfNodes = 0;
