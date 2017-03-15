@@ -3,6 +3,7 @@
 #include <cmath>
 #include <iostream>
 #include <cstring>
+#include <vector>
 
 
 using namespace std;
@@ -24,11 +25,11 @@ public:
 	int operator-(int);
 	int operator-(Node*);
 
-	Node *SearchHeap(int);
+	int SearchHeap(int);
 	int SwapCond(Node*);
 
 	unsigned int numberOfNodes = 0;
-	Node *nodeArray;
+	vector<Node*> nodeArray;
 
 	void Draw();
 

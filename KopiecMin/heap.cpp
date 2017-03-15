@@ -19,43 +19,51 @@ inline int rightChildNmbr(int a) { return (a * 2) + 2; }
 
 
 Heap::Heap() {
-	nodeArray = static_cast<Node*>(malloc(sizeof(Node))); //start of the array is pointing at NULL
+	//nodeArray = static_cast<Node*>(malloc(sizeof(Node))); //start of the array is pointing at NULL
+	nodeArray.resize(1);
 
 }
 
 Heap::~Heap() {
-	delete[] nodeArray;
+	//delete[] nodeArray;
 
 }
 
 int Heap::operator+(int val) {
-	int k = numberOfNodes;
-
+	unsigned int &k = numberOfNodes;
+	Node *aux;
+	aux = new Node;
 
 	if (k == 0) {
 		//in case of adding a first node, set all pointers to 0
-		nodeArray->value = val;
-		nodeArray->parent = 0;
-		nodeArray->leftChild = 0;
-		nodeArray->rightChild = 0;
+		
+		aux->value = val;
+		aux->parent = 0;
+		aux->leftChild = 0;
+		aux->rightChild = 0;
+
+		nodeArray.push_back(aux);
+
 		numberOfNodes++;
+		delete aux;
 		return 1;
 		
 	}
 	else {
-		nodeArray = reinterpret_cast<Node*> (realloc(nodeArray, sizeof(Node)*(k+1) ) ); //casting the returned void to node ptr
-		nodeArray[k].value = val;
-		nodeArray[k].parent = &nodeArray[parentNmbr(k)];
+		
+		aux->value = val;
+		aux->parent = nodeArray[parentNmbr(k)];
 
-		if (nodeArray[k].parent->leftChild == 0) {	//checking which child of the parent is empty
-			nodeArray[k].parent->leftChild = &nodeArray[k];
+		if (aux->parent->leftChild == 0) {	//checking which child of the parent is empty
+			aux->parent->leftChild = aux;
 		}
 		else {
-			nodeArray[k].parent->rightChild = &nodeArray[k];
+			aux->parent->rightChild = aux;
 		}
 
-		nodeArray[k].leftChild = 0;
-		nodeArray[k].rightChild = 0;
+		aux->leftChild = 0;
+		aux->rightChild = 0;
+		nodeArray.push_back(aux);
 		SwapCond(&nodeArray[k]);
 
 	}
@@ -71,14 +79,11 @@ int Heap::operator+(int val) {
 int Heap::operator-(int val) {
 	Node *aux;
 	aux = SearchHeap(val);
-	//try {
 		while (aux) {
 			operator-(aux);
 			aux = SearchHeap(val);
 		}
 		return 1;
-	//}
-	//catch (...) { return 0; }
 	
 }
 
@@ -99,8 +104,6 @@ int Heap::operator-(Node *a) {
 }
 
 Node *Heap::SearchHeap(int val) {
-	//node *aux;
-	//aux = nodeArray + 1;
 	int n = numberOfNodes;
 	int i = 0;
 	while (i < n) {
@@ -122,24 +125,9 @@ int Heap::SwapCond(Node *a) { //puts selected node in the correct place of the h
 	
 	while ((a->leftChild && a->leftChild->value < a->value) ||
 		(a->rightChild && a->rightChild->value < a->value)) {
-		/*
-		if (a->leftChild->value < a->rightChild->value) {
-			int aux = a->rightChild->value;		//changes both child nodes so that the smaller one is to the right
-			a->rightChild->value = a->leftChild->value;
-			a->leftChild->value = aux;
-		}
-		int aux = a->value;
-		a->value = a->rightChild->value;
-		a->rightChild->value = aux;
-		a = a->rightChild;
-		}*/
 
 		if (a->rightChild) {
-			/*if (a->leftChild->value < a->rightChild->value) {
-				int aux = a->rightChild->value;		//changes both child nodes so that the smaller one is to the right
-				a->rightChild->value = a->leftChild->value;
-				a->leftChild->value = aux;
-			}*/
+			
 			if (a->rightChild->value < a->leftChild->value) {
 				int aux = a->rightChild->value;
 				a->rightChild->value = a->value;
@@ -171,7 +159,6 @@ void Heap::Draw(){
 	while (i < n) {
 		cout << nodeArray[i].value<< " ";
 		if (nodeArray[0].value == 2) {
-			//cout << "KURWA";
 		}
 		i++;
 	}
