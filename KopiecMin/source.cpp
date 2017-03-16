@@ -15,7 +15,7 @@ int main() {
 	test + 5;
 	test + 7;
 	test + 1;
-	test.Draw();
+	cout << test;
 
 	Heap test2;	// {2,2,3,4,7}
 	test2 + 2;
@@ -23,15 +23,20 @@ int main() {
 	test2 + 3;
 	test2 + 4;
 	test2 + 2;
+	cout << test2;
 
-	test2.Draw();
+	test2 = test;
+	cout << test2;
 
 	test + test2;
 
-	test.Draw();
+	cout << test;
 
 	test - test2;
-	test.Draw();
+	//test.Draw();
+	cout << test;
+
+	cout << test[1];
 
 	//int *i = new int[1000];
 	getchar();
