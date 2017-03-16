@@ -1,4 +1,8 @@
 #pragma once
+
+#include "heap.h"
+
+
 class Node
 {
 public:

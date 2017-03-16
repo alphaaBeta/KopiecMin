@@ -1,31 +1,16 @@
 #include "heap.h"
 
 
-inline int square(int a, int power) {
-	int ret = 1;
-	while (power) {
-		ret *= a;
-		power--;
-	} 
-	return ret;
-}
-
-inline int parentNmbr(int a) { return (a-1) / 2; }
-inline int leftChildNmbr(int a) { return a * 2 + 1; }
-inline int rightChildNmbr(int a) { return (a * 2) + 2; }
 
 
 //---------------------------------------
 
 
-Heap::Heap() {
-	//nodeArray.resize(0);
 
-}
+inline int Heap::parentNmbr(int a) { return (a - 1) / 2; }
+inline int Heap::leftChildNmbr(int a) { return a * 2 + 1; }
+inline int Heap::rightChildNmbr(int a) { return (a * 2) + 2; }
 
-Heap::~Heap() {
-
-}
 
 int Heap::operator+(int val) {
 	unsigned int &k = numberOfNodes;
@@ -83,6 +68,15 @@ int Heap::operator-(int val) {
 	
 }
 
+int Heap::operator+(Heap &addingHeap) {
+	int n = addingHeap.nodeArray.size();
+	for (int i = 0; i < n; i++) {
+		operator+(addingHeap.nodeArray[i]->value);
+	}
+	return 1;
+
+}
+
 int Heap::operator-(Node *a) {
 	Node *aux;
 	//aux = &nodeArray[numberOfNodes - 1];
@@ -97,6 +91,18 @@ int Heap::operator-(Node *a) {
 	nodeArray.pop_back();
 	numberOfNodes--;
 	SwapCond(a);
+	return 1;
+}
+
+int Heap::operator-(Heap &minusHeap) {
+	for (int i = 0; i < minusHeap.nodeArray.size(); i++) {
+		for (int j = 0; j < nodeArray.size(); j++) {
+			if (minusHeap.nodeArray[i]->value == nodeArray[j]->value) {
+				operator-(nodeArray[j]);
+				break;	//we want to remove values with 1:1 ratio
+			}
+		}
+	}
 	return 1;
 }
 
@@ -149,6 +155,8 @@ int Heap::SwapCond(Node *a) { //puts selected node in the correct place of the h
 
 	return 0;
 }
+
+
 
 void Heap::Draw(){
 	int n = nodeArray.size();
