@@ -6,11 +6,17 @@ using namespace std;
 //----------------------------------
 #include "heap.h"
 
-
+bool addTest() {
+	Heap test1; 
+	test1 += 2;
+	test1 += 5;
+	return (test1.contains(2) && test1.contains(5) && test1.size() == 2);
+}
 
 int main() {
 	Heap test;	// {1,2,5,5,7}
-	test + 2;
+	test += 2;
+	Heap test2 = test + 2;
 	test + 5;
 	test + 5;
 	test + 7;

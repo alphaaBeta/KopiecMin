@@ -113,13 +113,14 @@ int Heap::operator[](int n)
 {
 	return nodeArray[n]->value;
 }
-
+//Heap test;
+// dodanie x elementpw do test
+// test = test;
 int Heap::operator=(Heap &rs) {
 
 	while (nodeArray.size()) {
 		operator-(nodeArray[0]);
 	}
-	//nodeArray.clear();
 	for (int i = 0; i < rs.nodeArray.size(); i++) {
 		operator+(rs.nodeArray[i]->value);
 	}
@@ -179,13 +180,3 @@ int Heap::SwapCond(Node *a) { //puts selected node in the correct place of the h
 }
 
 
-
-/*void Heap::Draw(){
-	int n = nodeArray.size();
-	int i = 0;
-	while (i < n) {
-		cout << nodeArray.at(i)->value<< " ";
-		i++;
-	}
-	cout <<endl << numberOfNodes<< endl;
-}*/

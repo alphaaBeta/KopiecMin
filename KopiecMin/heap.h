@@ -21,12 +21,21 @@ class Heap
 public:
 	//Heap();	//vectors so no need for that?
 	//~Heap();
-	int operator+(int);
+	Heap(const Heap&);
+	Heap& operator+(int);
 	int operator+(Heap&);
 	int operator-(int);
 	int operator-(Node*);
 	int operator-(Heap&);
 	int operator[](int);
+
+	Heap& operator+=(int);
+	Heap& operator+=(Heap&);
+	//TODO: opeatory -=, =,
+	// konstruktor kopiuj¹cy
+	// contains
+	//testy
+	// destruktor
 
 	int Heap::operator=(Heap &rs);
 
