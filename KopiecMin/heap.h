@@ -19,19 +19,28 @@ using namespace std;
 class Heap
 {
 public:
-	//Heap();	//vectors so no need for that?
-	//~Heap();
 	Heap(const Heap&);
+	~Heap();
+
 	Heap& operator+(int);
-	int operator+(Heap&);
-	int operator-(int);
-	int operator-(Node*);
-	int operator-(Heap&);
+	Heap& operator+(Heap&);
+	int Add(int);
+	int Add(Heap&);
+
+	Heap& operator-(int);
+	Heap& operator-(Node*);
+	Heap& operator-(Heap&);
+	int Remove(int);
+	int Remove(Heap&);
+
 	int operator[](int);
 
 	Heap& operator+=(int);
 	Heap& operator+=(Heap&);
-	//TODO: opeatory -=, =,
+	Heap& operator-=(int);
+	Heap& operator-=(Heap&);
+
+	//TODO: opeatory -=,
 	// konstruktor kopiuj¹cy
 	// contains
 	//testy
@@ -39,7 +48,9 @@ public:
 
 	int Heap::operator=(Heap &rs);
 
-	Node * SearchHeap(int);
+	const Node *FindNode(int);
+
+	int Contains(int);
 
 
 	inline bool operator< (const Heap &rs) {
@@ -93,7 +104,6 @@ private:
 	inline int parentNmbr(int);
 	inline int leftChildNmbr(int);
 	inline int rightChildNmbr(int);
-
 
 
 

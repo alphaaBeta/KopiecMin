@@ -12,8 +12,8 @@ inline int Heap::leftChildNmbr(int a) { return a * 2 + 1; }
 inline int Heap::rightChildNmbr(int a) { return (a * 2) + 2; }
 
 
-int Heap::operator+(int val) {
-	unsigned int &k = numberOfNodes;
+Heap& Heap::operator+(int val) {
+	unsigned int k = nodeArray.size();
 	Node *aux;
 	aux = new Node;
 
@@ -27,7 +27,6 @@ int Heap::operator+(int val) {
 
 		nodeArray.push_back(aux);
 
-		numberOfNodes++;
 		return 1;
 		
 	}
@@ -51,13 +50,12 @@ int Heap::operator+(int val) {
 	}
 	
 	
-	numberOfNodes++;
 	return 1;
 
 	
 }
 
-int Heap::operator+(Heap &addingHeap) {
+Heap& Heap::operator+(Heap &addingHeap) {
 	int n = addingHeap.nodeArray.size();
 	for (int i = 0; i < n; i++) {
 		this->operator+(addingHeap.nodeArray[i]->value);
@@ -66,12 +64,16 @@ int Heap::operator+(Heap &addingHeap) {
 
 }
 
-int Heap::operator-(int val) {
-	Node *aux;
-	aux = SearchHeap(val);
+int Heap::Add(int) {
+
+}
+
+Heap& Heap::operator-(int val) {
+	const Node *aux;
+	aux = FindNode(val);
 		while (aux) {
-			this->operator-(aux);
-			aux = SearchHeap(val);
+			this->operator-(aux);	//TODO: odejmowanie
+			aux = FindNode(val);
 		}
 		return 1;
 	
@@ -79,9 +81,9 @@ int Heap::operator-(int val) {
 
 
 
-int Heap::operator-(Node *a) {	//removes a selected node
+Heap& Heap::operator-(Node *a) {	//removes a selected node
 	Node *aux;
-	aux = nodeArray[numberOfNodes - 1];
+	aux = nodeArray[nodeArray.size() - 1];
 
 	if (aux->parent && aux->parent->leftChild == aux) {	//removing connections
 		aux->parent->leftChild = 0;
@@ -92,12 +94,11 @@ int Heap::operator-(Node *a) {	//removes a selected node
 
 	a->value = aux->value;
 	nodeArray.pop_back();
-	numberOfNodes--;
 	SwapCond(a);
 	return 1;
 }
 
-int Heap::operator-(Heap &minusHeap) {	//removes the common part of two heaps
+Heap& Heap::operator-(Heap &minusHeap) {	//removes the common part of two heaps
 	for (int i = 0; i < minusHeap.nodeArray.size(); i++) {
 		for (int j = 0; j < nodeArray.size(); j++) {
 			if (minusHeap.nodeArray[i]->value == nodeArray[j]->value) {
@@ -113,10 +114,12 @@ int Heap::operator[](int n)
 {
 	return nodeArray[n]->value;
 }
+
 //Heap test;
 // dodanie x elementpw do test
 // test = test;
-int Heap::operator=(Heap &rs) {
+
+Heap& Heap::operator=(Heap &rs) {
 
 	while (nodeArray.size()) {
 		operator-(nodeArray[0]);
@@ -129,7 +132,7 @@ int Heap::operator=(Heap &rs) {
 }
 
 
-Node *Heap::SearchHeap(int val) {	//returns a ptr to first node that value = val
+const Node *Heap::FindNode(int val) {	//returns a ptr to first node that value = val
 	int n = nodeArray.size();
 	for (int i = 0; i < n; i++) {
 		if (nodeArray[i]->value == val) {
@@ -176,7 +179,7 @@ int Heap::SwapCond(Node *a) { //puts selected node in the correct place of the h
 
 	}
 
-	return 0;
+	return 1;
 }
 
 
