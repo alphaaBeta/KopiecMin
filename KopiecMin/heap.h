@@ -19,6 +19,10 @@ using namespace std;
 class Heap
 {
 public:
+
+	//METHODS
+	//////////////////////
+	Heap();
 	Heap(const Heap&);
 	~Heap();
 
@@ -28,12 +32,13 @@ public:
 	int Add(Heap&);
 
 	Heap& operator-(int);
-	Heap& operator-(Node*);
 	Heap& operator-(Heap&);
 	int Remove(int);
+	int Remove(Node *);
 	int Remove(Heap&);
 
 	int operator[](int);
+	int Size();
 
 	Heap& operator+=(int);
 	Heap& operator+=(Heap&);
@@ -46,12 +51,14 @@ public:
 	//testy
 	// destruktor
 
-	int Heap::operator=(Heap &rs);
+	Heap& operator=(Heap &rs);
 
 	const Node *FindNode(int);
 
 	int Contains(int);
 
+	//COMPARE OPERATORS
+	/////////////////////////////
 
 	inline bool operator< (const Heap &rs) {
 		if (nodeArray.size() < rs.nodeArray.size()) {
@@ -68,19 +75,25 @@ public:
 	}
 
 	inline bool operator<= (const Heap &rs) {
-		return (!operator<(rs));
-	}
-
-	inline bool operator>= (const Heap &rs) {
 		return (!operator>(rs));
 	}
 
-	inline bool operator== (const Heap &rs) {
-		if (nodeArray.size() == rs.nodeArray.size()) { return true; }
-		else { return false; }
+	inline bool operator>= (const Heap &rs) {
+		return (!operator<(rs));
 	}
 
-	inline bool operator!= (const Heap &rs) { 
+	inline bool operator== (Heap &rs) {
+		if (nodeArray.size() != rs.nodeArray.size()) { return false; }
+		for (int i = 0; i < nodeArray.size(); i++) {
+			if(this->Contains(nodeArray[i]->value)!=rs.Contains(nodeArray[i]->value))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	inline bool operator!= (Heap &rs) { 
 		return (!operator==(rs)); 
 	}
 
@@ -96,14 +109,20 @@ public:
 	}
 
 private:
-	unsigned int numberOfNodes = 0;
-	vector<Node*> nodeArray;
 
+	//METHODS
+	/////////////////
 	int SwapCond(Node*);
+	Node *FindNodePriv(int);
 
 	inline int parentNmbr(int);
 	inline int leftChildNmbr(int);
 	inline int rightChildNmbr(int);
+
+
+	//VARIABLES
+	//////////////////////
+	vector<Node*> nodeArray;
 
 
 
