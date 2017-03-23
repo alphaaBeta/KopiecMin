@@ -4,14 +4,16 @@
 
 bool HeapTester::DoTests()
 {
+	assert(FindNodeTest() == 1);
+
 	assert(AddTest() == 1);
-	cout << endl;
+
 	assert(AssignAddTest() == 1);
-	cout << endl;
+
 	assert(RemoveTest() == 1);
-	cout << endl;
+
 	assert(HeapAddRemoveTest() == 1);
-	cout << endl;
+
 	return true;
 }
 
@@ -68,4 +70,19 @@ bool HeapTester::HeapAddRemoveTest() {
 		mainHeap.Contains(2) &&
 		(mainHeap.Size() == 4)
 		);
+}
+
+bool HeapTester::FindNodeTest() {
+	Heap auxHeap;
+	auxHeap += 2;
+	auxHeap += 4;
+	auxHeap += 6;
+	const Node *aux, *zero;
+	aux = auxHeap.FindNode(4);
+	zero = auxHeap.FindNode(5);
+
+	if (aux == auxHeap.nodeArray[1] && zero == 0) {
+		return true;
+	}
+	else return false;
 }

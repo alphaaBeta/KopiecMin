@@ -13,5 +13,11 @@ public:
 	bool RemoveTest();
 
 	bool HeapAddRemoveTest();
+
+	bool FindNodeTest();
+
+
+private:
+
 };
 

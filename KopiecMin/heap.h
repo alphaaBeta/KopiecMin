@@ -22,20 +22,20 @@ public:
 
 	//METHODS
 	//////////////////////
-	Heap();
-	Heap(const Heap&);
-	~Heap();
+	Heap();//+
+	Heap(const Heap&);//+
+	~Heap();//+no mem leaks
 
-	Heap& operator+(int);
-	Heap& operator+(Heap&);
-	int Add(int);
-	int Add(Heap&);
+	Heap& operator+(int);//+
+	Heap& operator+(Heap&);//+
+	int Add(int);//+
+	int Add(Heap&);//+
 
-	Heap& operator-(int);
-	Heap& operator-(Heap&);
-	int Remove(int);
+	Heap& operator-(int);//+
+	Heap& operator-(Heap&);//+
+	int Remove(int);//+
 	int Remove(Node *);
-	int Remove(Heap&);
+	int Remove(Heap&);//+
 
 	int operator[](int);
 	int Size();
@@ -124,7 +124,7 @@ private:
 	//////////////////////
 	vector<Node*> nodeArray;
 
-
+	friend class HeapTester;
 
 };
 

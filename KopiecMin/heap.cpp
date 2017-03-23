@@ -46,11 +46,11 @@ Heap& Heap::operator+(int val) {
 
 Heap& Heap::operator+(Heap &addingHeap) {
 
-	Heap aux(*this);
+	Heap *aux(this);
 
-	aux.Add(addingHeap);
+	aux->Add(addingHeap);
 
-	return aux;
+	return *aux;
 
 }
 
@@ -91,11 +91,11 @@ Heap& Heap::operator-(int val) {
 
 
 Heap& Heap::operator-(Heap &minusHeap) {	//removes the common part of two heaps
-	Heap aux(*this);
+	Heap *aux(this);
 	
-	aux.Remove(minusHeap);
+	aux->Remove(minusHeap);
 	
-	return aux;
+	return *aux;
 }
 
 Heap& Heap::operator-=(int val) {
@@ -116,12 +116,12 @@ int Heap::operator[](int n)
 Heap& Heap::operator=(Heap &rs) {
 
 
-	if (this != &rs && !rs.nodeArray.empty()) {
+	if (this != &rs) {
 
 		while (nodeArray.size()) {
 			Remove(nodeArray[0]);
 		}
-		if (!nodeArray.size()) { return *this; }
+		if (!rs.nodeArray.size()) { return *this; }
 		for (int i = 0; i < rs.nodeArray.size(); i++) {
 			Add(rs.nodeArray[i]->value);
 		}
