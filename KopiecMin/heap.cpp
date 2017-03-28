@@ -6,7 +6,6 @@
 //---------------------------------------
 
 
-
 inline int Heap::parentNmbr(int a) { return (a - 1) / 2; }
 inline int Heap::leftChildNmbr(int a) { return a * 2 + 1; }
 inline int Heap::rightChildNmbr(int a) { return (a * 2) + 2; }
@@ -16,10 +15,10 @@ Heap::Heap() {}	//no need?
 Heap::Heap(const Heap &src) {
 	//Heap *aux;
 	//aux = new Heap;
-	int size = src.nodeArray.size();
+	unsigned int size = src.nodeArray.size();
 	nodeArray.resize(size);
 
-	for (int i = 0; i < size; i++) {
+	for (unsigned int i = 0; i < size; i++) {
 		this->Add(src.nodeArray[i]->value);
 	}
 
@@ -138,8 +137,8 @@ Heap& Heap::operator=(Heap &rs) {
 
 
 int Heap::Add(int val) {
-	try {
-		int k = this->nodeArray.size();
+
+		unsigned int k = this->nodeArray.size();
 		Node *aux;
 		aux = new Node;
 
@@ -177,31 +176,19 @@ int Heap::Add(int val) {
 
 
 		return 1;
-	}
-	catch (...)
-	{
-		return 0;
-	}
 }
 
 int Heap::Add(Heap &src) {
 
-	try {
-		int n = src.nodeArray.size();
-		for (int i = 0; i < n; i++) {
+		unsigned int n = src.nodeArray.size();
+		for (unsigned int i = 0; i < n; i++) {
 			this->Add(src.nodeArray[i]->value);
 		}
 		return 1;
-	}
-	catch (...)
-	{
-		return 0;
-	}
 }
 
 int Heap::Remove(Node *a) {
 
-	try {
 		Node *aux;
 		aux = nodeArray[nodeArray.size() - 1];
 
@@ -217,29 +204,20 @@ int Heap::Remove(Node *a) {
 		if (aux == a) { delete aux; return 1; }
 		if(nodeArray.size() > 0) SwapCond(a);
 		return 1;
-	}
-	catch (...) {
-		return 0;
-	}
 
 }
 
 int Heap::Remove(int val) {
 
-	try {
 		Node *auxnode;
 		auxnode = FindNodePriv(val);
 		if (!auxnode || (auxnode->value != val)) return 0;
 		this->Remove(auxnode);
 		return 1;
-	}
-	catch (...) {
-		return 0;
-	}
 }
 
 int Heap::Remove(Heap &src) {
-	try {
+
 		for (int i = 0; i < src.nodeArray.size(); i++) {
 			for (int j = 0; j < this->nodeArray.size(); j++) {
 				if (src.nodeArray[i]->value == this->nodeArray[j]->value) {
@@ -249,11 +227,6 @@ int Heap::Remove(Heap &src) {
 			}
 		}
 		return 1;
-	}
-	catch(...)
-	{
-		return 0;
-	}
 }
 
 
@@ -264,8 +237,8 @@ int Heap::Remove(Heap &src) {
 
 
 const Node *Heap::FindNode(int val) {	//returns a ptr to first node that value = val
-	int n = nodeArray.size();
-	for (int i = 0; i < n; i++) {
+	unsigned int n = nodeArray.size();
+	for (unsigned int i = 0; i < n; i++) {
 		if (nodeArray[i]->value == val) {
 			return nodeArray[i];
 		}
@@ -274,8 +247,8 @@ const Node *Heap::FindNode(int val) {	//returns a ptr to first node that value =
 }
 
 Node *Heap::FindNodePriv(int val) {	//returns a ptr to first node that value = val
-	int n = nodeArray.size();
-	for (int i = 0; i < n; i++) {
+	unsigned int n = nodeArray.size();
+	for (unsigned int i = 0; i < n; i++) {
 		if (nodeArray[i]->value == val) {
 			return nodeArray[i];
 		}
